@@ -1,6 +1,7 @@
 package com.zilch.interview;
 
-import com.zilch.interview.model.MutableBlock;
+import com.zilch.interview.model.pojo.BlockData;
+import com.zilch.interview.model.pojo.MutableBlock;
 import com.zilch.interview.service.BlockMiningService;
 import org.assertj.core.util.Lists;
 import org.junit.Before;
@@ -24,7 +25,7 @@ public class BlockchainApplicationTests {
 		prefixString = new String(new char[PREFIX]).replace('\0', '0');
 		service = new BlockMiningService();
 		MutableBlock newBlock = new MutableBlock(
-				"The is an Origin Block.",
+				BlockData.genesis(),
 				"0",
 				new Date().getTime());
 
@@ -34,7 +35,7 @@ public class BlockchainApplicationTests {
 	@Test
 	public void givenBlockchain_whenNewBlockAdded_thenSuccess() {
 		MutableBlock newBlock = new MutableBlock(
-				"The is a New Block.",
+				new BlockData("1", "2", 15),
 				blockchain.get(blockchain.size() - 1).getHash(),
 				new Date().getTime());
 		service.mineBlock(newBlock);

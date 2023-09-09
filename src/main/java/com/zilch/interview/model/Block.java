@@ -1,11 +1,13 @@
 package com.zilch.interview.model;
 
+import com.zilch.interview.model.pojo.BlockData;
+
 public interface Block {
     String getPreviousHash();
 
     String getHash();
 
-    String getData();
+    BlockData getData();
 
     long getTimeStamp();
 

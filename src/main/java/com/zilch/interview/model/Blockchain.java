@@ -1,11 +1,15 @@
 package com.zilch.interview.model;
 
 import com.zilch.interview.BlockHashCalculator;
+import com.zilch.interview.model.pojo.BlockData;
+import com.zilch.interview.model.pojo.ImmutableBlock;
+import com.zilch.interview.model.pojo.MutableBlock;
 import com.zilch.interview.service.BlockMiningService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.zilch.interview.service.BlockMiningService.DEFAULT_PREFIX_LENGTH;
 
@@ -21,7 +25,7 @@ public class Blockchain {
     }
 
     private void createGenesisBlock() {
-        MutableBlock genesisBlock = new MutableBlock("Genesis Block", "0", System.currentTimeMillis());
+        MutableBlock genesisBlock = new MutableBlock(BlockData.genesis(), "0", System.currentTimeMillis());
         miningService.mineBlock(genesisBlock);
         chain.add(genesisBlock.toImmutable());
     }
@@ -36,6 +40,14 @@ public class Blockchain {
         if (isBlockValid(block)) {
             chain.add(block.toImmutable());
         }
+    }
+
+    public Optional<ImmutableBlock> isTransactionValid(BlockData blockData) {
+        return chain.stream()
+                .filter(block -> block.getData().equals(blockData))
+                .findAny();
+
+        //return chain.stream().anyMatch(block -> block.getData().equals(blockData));
     }
 
     public boolean isBlockValid(Block block) {

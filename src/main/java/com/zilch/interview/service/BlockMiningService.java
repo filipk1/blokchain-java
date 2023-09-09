@@ -1,7 +1,7 @@
 package com.zilch.interview.service;
 
 import com.zilch.interview.BlockHashCalculator;
-import com.zilch.interview.model.MutableBlock;
+import com.zilch.interview.model.pojo.MutableBlock;
 import org.springframework.stereotype.Service;
 
 @Service
