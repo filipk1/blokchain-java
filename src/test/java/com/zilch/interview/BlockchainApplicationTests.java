@@ -1,6 +1,6 @@
 package com.zilch.interview;
 
-import com.zilch.interview.model.Block;
+import com.zilch.interview.model.MutableBlock;
 import com.zilch.interview.service.BlockMiningService;
 import org.assertj.core.util.Lists;
 import org.junit.Before;
@@ -15,7 +15,7 @@ import static org.junit.Assert.assertTrue;
 
 public class BlockchainApplicationTests {
 	private static final int PREFIX = 4;
-	private List<Block> blockchain;
+	private List<MutableBlock> blockchain;
 	private String prefixString;
 	private BlockMiningService service;
 	@Before
@@ -23,7 +23,7 @@ public class BlockchainApplicationTests {
 		blockchain = Lists.newArrayList();
 		prefixString = new String(new char[PREFIX]).replace('\0', '0');
 		service = new BlockMiningService();
-		Block newBlock = new Block(
+		MutableBlock newBlock = new MutableBlock(
 				"The is an Origin Block.",
 				"0",
 				new Date().getTime());
@@ -33,7 +33,7 @@ public class BlockchainApplicationTests {
 	}
 	@Test
 	public void givenBlockchain_whenNewBlockAdded_thenSuccess() {
-		Block newBlock = new Block(
+		MutableBlock newBlock = new MutableBlock(
 				"The is a New Block.",
 				blockchain.get(blockchain.size() - 1).getHash(),
 				new Date().getTime());
