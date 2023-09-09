@@ -1,6 +1,7 @@
 package com.zilch.interview;
 
 import com.zilch.interview.model.Block;
+import com.zilch.interview.model.MutableBlock;
 import lombok.extern.java.Log;
 
 import java.nio.charset.StandardCharsets;
