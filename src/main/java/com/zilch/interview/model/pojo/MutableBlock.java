@@ -1,9 +1,7 @@
 package com.zilch.interview.model.pojo;
 
-import com.zilch.interview.BlockHashCalculator;
+import com.zilch.interview.service.BlockHashCalculator;
 import com.zilch.interview.model.Block;
-import com.zilch.interview.model.pojo.BlockData;
-import com.zilch.interview.model.pojo.ImmutableBlock;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;

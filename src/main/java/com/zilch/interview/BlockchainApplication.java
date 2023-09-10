@@ -10,12 +10,12 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class BlockchainApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(BlockchainApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(BlockchainApplication.class, args);
+    }
 
-	@Bean
-	public Blockchain blockchain(@Autowired BlockMiningService miningService) {
-		return new Blockchain(miningService);
-	}
+//    @Bean
+//    public Blockchain blockchain(@Autowired BlockMiningService miningService) {
+//        return new Blockchain(miningService);
+//    }
 }
