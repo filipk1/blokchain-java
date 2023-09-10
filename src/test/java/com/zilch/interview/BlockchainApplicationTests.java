@@ -2,10 +2,17 @@ package com.zilch.interview;
 
 import com.zilch.interview.model.pojo.BlockData;
 import com.zilch.interview.model.pojo.MutableBlock;
+import com.zilch.interview.model.pojo.TransactionData;
+import com.zilch.interview.service.BlockHashCalculator;
 import com.zilch.interview.service.BlockMiningService;
 import org.assertj.core.util.Lists;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
 import java.util.List;
@@ -13,7 +20,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-
+@TestPropertySource("application.properties")
 public class BlockchainApplicationTests {
 	private static final int PREFIX = 4;
 	private List<MutableBlock> blockchain;
@@ -34,12 +41,14 @@ public class BlockchainApplicationTests {
 	}
 	@Test
 	public void givenBlockchain_whenNewBlockAdded_thenSuccess() {
+		BlockData blockData = new BlockData();
+		blockData.add(TransactionData.builder().from("xyz").to("pod").amount(170).build());
 		MutableBlock newBlock = new MutableBlock(
-				new BlockData("1", "2", 15),
+				blockData,
 				blockchain.get(blockchain.size() - 1).getHash(),
 				new Date().getTime());
 		service.mineBlock(newBlock);
-        assertEquals(newBlock.getHash().substring(0, BlockMiningService.DEFAULT_PREFIX_LENGTH), prefixString);
+        assertEquals(newBlock.getHash().substring(0, 4), prefixString);
 		blockchain.add(newBlock);
 		System.out.println("Blockchain: " + blockchain);
 	}

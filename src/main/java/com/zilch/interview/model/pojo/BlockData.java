@@ -1,18 +1,33 @@
 package com.zilch.interview.model.pojo;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-@Getter
-@Setter
+import java.util.ArrayList;
+import java.util.List;
+
 @ToString
-@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode
 public class BlockData {
-    private String from;
-    private String to;
-    private int amount;
+    private final List<TransactionData> transactions = new ArrayList<>(10);
 
-    public static BlockData genesis(){
-        return new BlockData("0", "0", 0);
+    public boolean add(TransactionData transactionData) {
+        if (transactions.size() >= 10) { // TODO: how to move to config if its pojo not managed by spring + i don't want additional xyzLimitConfiguration field inside
+            return false;
+        }
+        return transactions.add(transactionData);
+    }
+
+    public boolean contains(TransactionData transactionData) {
+        return transactions.contains(transactionData);
+    }
+
+    public static BlockData genesis() {
+        BlockData blockData = new BlockData();
+        blockData.add(TransactionData.genesis());
+
+        return blockData;
     }
 }

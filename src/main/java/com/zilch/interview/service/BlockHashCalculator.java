@@ -1,4 +1,4 @@
-package com.zilch.interview;
+package com.zilch.interview.service;
 
 import com.zilch.interview.model.Block;
 import lombok.extern.java.Log;
