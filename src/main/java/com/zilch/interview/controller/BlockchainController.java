@@ -59,7 +59,7 @@ public class BlockchainController {
     public String validateTransaction(@RequestBody TransactionData transactionData) {
         // TODO: sanity check if local sql
 
-        Optional<ImmutableBlock> result = blockchain.isTransactionValid(transactionData);
+        Optional<ImmutableBlock> result = blockchain.findTransaction(transactionData);
         return result.isPresent() ? result.get().toString() : "NOT_FOUND";
     }
 
@@ -69,6 +69,7 @@ public class BlockchainController {
         for (TransactionData trxData : sqsService.getTransactions()) {
             if (!blockData.add(trxData)) {
                 log.warning("Transaction rejected because of limit: " + trxData.toString());
+                break;
             }
         }
 

@@ -2,6 +2,8 @@ package com.zilch.interview.model.pojo;
 
 import org.junit.Test;
 
+import java.util.stream.IntStream;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -11,7 +13,7 @@ public class BlockDataTest {
     public void testCapacityShouldNotAddMoreThan10Elements() {
         BlockData blockData = new BlockData();
 
-        for (int i = 0; i < 11; i++) {
+        IntStream.rangeClosed(0,11).forEach(i -> {
             boolean isAdded = blockData.add(TransactionData.builder()
                     .from("ax" + i)
                     .to("az" + i)
@@ -23,6 +25,6 @@ public class BlockDataTest {
             } else {
                 assertFalse(isAdded);
             }
-        }
+        });
     }
 }

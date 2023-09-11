@@ -2,14 +2,9 @@ package com.zilch.interview.model.pojo;
 
 import com.zilch.interview.service.BlockHashCalculator;
 import com.zilch.interview.model.Block;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
-@Getter
-@Setter
-@ToString
+@Data
 public class MutableBlock implements Block {
     private @NonNull String hash;
     private @NonNull String previousHash;

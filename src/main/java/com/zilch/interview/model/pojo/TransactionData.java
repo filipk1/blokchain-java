@@ -1,18 +1,16 @@
 package com.zilch.interview.model.pojo;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Value;
 
-@Getter
-@ToString
+@Value
 @Builder
-@AllArgsConstructor
-@EqualsAndHashCode
 public class TransactionData {
-    private final String from;
-    private final String to;
-    private final int amount;
+    String from;
+    String to;
+    int amount;
 
-    public static TransactionData genesis(){
+    public static TransactionData genesis() {
         return new TransactionData("0", "0", 0);
     }
 }

@@ -64,9 +64,9 @@ public class SqsService {
         }
 
         return Optional.of(TransactionData.builder()
-                .from(split[0])
-                .to(split[1])
-                .amount(Integer.parseInt(split[2])).build());
+                .from(split[0].trim())
+                .to(split[1].trim())
+                .amount(Integer.parseInt(split[2].trim())).build());
     }
 
     private boolean isValid(String[] split) {

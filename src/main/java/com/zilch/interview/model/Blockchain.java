@@ -1,21 +1,23 @@
 package com.zilch.interview.model;
 
-import com.zilch.interview.service.BlockHashCalculator;
 import com.zilch.interview.model.pojo.BlockData;
 import com.zilch.interview.model.pojo.ImmutableBlock;
 import com.zilch.interview.model.pojo.MutableBlock;
 import com.zilch.interview.model.pojo.TransactionData;
+import com.zilch.interview.service.BlockHashCalculator;
 import com.zilch.interview.service.BlockMiningService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 @Component
 public class Blockchain {
-    private final List<ImmutableBlock> chain;
+    private List<ImmutableBlock> chain;
     private final BlockMiningService miningService;
 
     @Value("${blockchain.prefixLength}")
@@ -23,7 +25,6 @@ public class Blockchain {
 
     @Autowired
     public Blockchain(BlockMiningService miningService) {
-        this.chain = new ArrayList<>();
         this.miningService = miningService;
         createGenesisBlock();
     }
@@ -31,7 +32,7 @@ public class Blockchain {
     private void createGenesisBlock() {
         MutableBlock genesisBlock = new MutableBlock(BlockData.genesis(), "0", System.currentTimeMillis());
         miningService.mineBlock(genesisBlock);
-        chain.add(genesisBlock.toImmutable());
+        chain = List.of(genesisBlock.toImmutable());
     }
 
     public ImmutableBlock getLatestBlock() {
@@ -42,11 +43,11 @@ public class Blockchain {
     public void addBlock(MutableBlock block) {
         block.setPreviousHash(getLatestBlock().getHash());
         if (isBlockValid(block)) {
-            chain.add(block.toImmutable());
+            chain = Stream.concat(chain.stream(), Stream.of(block.toImmutable())).collect(Collectors.toUnmodifiableList());
         }
     }
 
-    public Optional<ImmutableBlock> isTransactionValid(TransactionData transactionData) {
+    public Optional<ImmutableBlock> findTransaction(TransactionData transactionData) {
         return chain.stream()
                 .filter(block -> block.getData().contains(transactionData))
                 .findAny();
