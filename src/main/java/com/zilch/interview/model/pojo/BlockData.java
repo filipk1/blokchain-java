@@ -14,7 +14,7 @@ public class BlockData {
     private final List<TransactionData> transactions = new ArrayList<>(10);
 
     public boolean add(TransactionData transactionData) {
-        if (transactions.size() >= 10) { // TODO: how to move to config if its pojo not managed by spring + i don't want additional xyzLimitConfiguration field inside
+        if (transactions.size() >= 10) {
             return false;
         }
         return transactions.add(transactionData);

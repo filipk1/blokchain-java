@@ -14,12 +14,16 @@ public class BlockMiningService {
        time between mined blocks. Usually the process is much more complex and miners constantly manipulate nonce value
        to find the correct hash. There is only one correct hash per block. */
     public String mineBlock(MutableBlock block) {
-        String prefixString = "0".repeat(prefixLength);
-        while (!block.getHash().substring(0, prefixLength).equals(prefixString)) {
-            block.setNonce(block.getNonce() + 1);
+        while (!isPrefixComplexityMet(block.getHash())) {
+            block.setNonce(block.getNonce() + 1); // just bruteforce
             block.setHash(BlockHashCalculator.calculate(block));
         }
         return block.getHash();
+    }
+
+    private boolean isPrefixComplexityMet(String hash) {
+        String prefixString = "0".repeat(prefixLength);
+        return hash.substring(0, prefixLength).equals(prefixString);
     }
 }
 
